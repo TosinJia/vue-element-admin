@@ -1,8 +1,9 @@
+console.log('--src\\main.js--')
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
 
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
+import 'normalize.css/normalize.css' // a modern alternative to CSS resets "normalize.css": "7.0.0",
 
 import Element from 'element-ui'
 import './styles/element-variables.scss'
@@ -14,7 +15,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import './icons' // icon
+import './icons' // icon 加载全局组件 svg-icon
 import './permission' // permission control
 import './utils/error-log' // error log
 

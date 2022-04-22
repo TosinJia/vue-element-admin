@@ -1,4 +1,6 @@
 <template>
+  <!-- 二次封装组件或者说写高阶组件的神器  -->
+  <!-- 使用v-bind="$attrs"：传递所有属性、v-on="$listeners"传递所有方法。没有在$props中声明的方法和属性，会通过$attrs、$listeners直接传递下去。 -->
   <el-select ref="dragSelect" v-model="selectVal" v-bind="$attrs" class="drag-select" multiple v-on="$listeners">
     <slot />
   </el-select>

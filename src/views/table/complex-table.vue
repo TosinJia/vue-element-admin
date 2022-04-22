@@ -2,6 +2,8 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+
+      <!-- Select 选择器 -->
       <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
       </el-select>
@@ -170,7 +172,8 @@ export default {
   components: { Pagination },
   directives: { waves },
   filters: {
-    statusFilter(status) {
+    // statusFilter(status) {
+    statusFilter: function(status) {
       const statusMap = {
         published: 'success',
         draft: 'info',
@@ -292,6 +295,7 @@ export default {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           this.temp.author = 'vue-element-admin'
           createArticle(this.temp).then(() => {
+            // 添加数据
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
@@ -305,7 +309,11 @@ export default {
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
+      // 当我们拿到需要修改行的数据时候不能直接将它直接赋值给dialog，
+      // this.temp = row // 在dialog里面改变状态的时候，遮罩下面的table里面该行的状态也在那里跟着一只变化着。
+      // 不能直接连等复制，需要重新指向一个新的引用。
+      // 赋值对象是一个obj 这样就不会共用同一个对象
+      this.temp = Object.assign({}, row) // copy obj 这样就不会共用同一个对象
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -316,10 +324,15 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          // const tempData = this.temp
+          // 不能直接连等复制，需要重新指向一个新的引用。
+          // 赋值对象是一个obj 这样就不会共用同一个对象
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateArticle(tempData).then(() => {
+            // 修改数据 找到修改的数据在list中的位置
             const index = this.list.findIndex(v => v.id === this.temp.id)
+            // 通过splice 替换数据 触发视图更新
             this.list.splice(index, 1, this.temp)
             this.dialogFormVisible = false
             this.$notify({
@@ -339,6 +352,7 @@ export default {
         type: 'success',
         duration: 2000
       })
+      // 删除数据 通过splice 删除数据
       this.list.splice(index, 1)
     },
     handleFetchPv(pv) {

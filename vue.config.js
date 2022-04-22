@@ -1,4 +1,5 @@
 'use strict'
+console.log('--vue.config.js-- process.env', process.env)
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
@@ -15,6 +16,11 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
+console.log('--vue.config.js-- \r\n\t--| process.env', process.env)
+console.log('--vue.config.js-- \r\n\t--| process.port', process.port)
+console.log('--vue.config.js-- \r\n\t--| process.npm_config_port', process.npm_config_port)
+console.log('--vue.config.js-- \r\n\t--| process.env.NODE_ENV', process.env.NODE_ENV)
+console.log('--vue.config.js-- \r\n\t--| process.env.VUE_APP_CUSTOM_ENV', process.env.VUE_APP_CUSTOM_ENV)
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -36,6 +42,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    // easy-mock 由于是一个纯前端个人项目,所以所以的数据都是用mockjs生成的,它的原理是:拦截了所有的请求并代理到本地模拟数据，所以 network 中没有任何的请求发出。
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {

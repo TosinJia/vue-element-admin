@@ -33,6 +33,7 @@
         </template>
       </el-table-column>
 
+      <!-- 之后就是通过 v-if / v-show动态切换不同的相应view就可以了。 -->
       <el-table-column min-width="300px" label="Title">
         <template slot-scope="{row}">
           <template v-if="row.edit">
@@ -110,7 +111,10 @@ export default {
       this.listLoading = true
       const { data } = await fetchList(this.listQuery)
       const items = data.items
+      // 当我们拿到 list 数据之后先洗一下数据，每一条数据里面插入一个edit[ true or false ]判断符，来表示当前行是否处于编辑状态。
+      // 之后就是通过v-show动态切换不同的相应view就可以了。
       this.list = items.map(v => {
+        // You can also use the vm.$set instance method, which is an alias to the global Vue.set
         this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
         v.originalTitle = v.title //  will be used when user click the cancel botton
         return v

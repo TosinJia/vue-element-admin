@@ -74,7 +74,7 @@
 
 <script>
 import { toggleClass } from '@/utils'
-import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
+import '@/assets/custom-theme/index.css' // the theme changed version element-ui css 引入自定义主题
 
 export default {
   name: 'Theme',
@@ -93,7 +93,11 @@ export default {
     }
   },
   watch: {
-    theme() {
+    // theme() {
+    // 表示监听指定数据的改变 '键是要监听的数据': 数据变化时候的处理函数
+    theme: function(newval, oldval) {
+      console.log('src\\views\\theme\\index.vue data() theme', newval, oldval)
+      // 基于Element的动态换肤 https://juejin.cn/post/6844903481224986638
       toggleClass(document.body, 'custom-theme')
     }
   }

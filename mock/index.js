@@ -12,6 +12,7 @@ const mocks = [
   ...article,
   ...search
 ]
+console.log('--mock\\index.js--', mocks)
 
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,

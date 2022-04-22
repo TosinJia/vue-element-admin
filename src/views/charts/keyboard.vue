@@ -8,8 +8,8 @@
 import Chart from '@/components/Charts/Keyboard'
 
 export default {
-  name: 'KeyboardChart',
-  components: { Chart }
+  name: 'KeyboardChart', // $vm0.$options.name
+  components: { Chart } // $vm0.$options.components
 }
 </script>
 

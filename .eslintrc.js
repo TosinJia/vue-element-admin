@@ -11,7 +11,9 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
-  // add your custom rules here
+  // eslint vue cli 默认提供了standard和airbnb 两种 lint 规范，说真的一个j检查校验的太松一个又太紧，而且每个团队的 lint 规范又是不同的
+  // https://github.com/vuejs/eslint-config-vue/blob/master/index.js
+  //  add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     "vue/max-attributes-per-line": [2, {

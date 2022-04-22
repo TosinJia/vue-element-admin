@@ -1,5 +1,10 @@
 <template>
   <div class="icons-container">
+    <!-- [Vue warn]: Unknown custom element: <icon-svg> - did you register the component correctly? For recursive components, make sure to provide the "name" option. -->
+    <icon-svg icon-class="404" />
+    <!-- src\icons\index.js src\components\SvgIcon\index.vue 全局组件 -->
+    <svg-icon icon-class="404" />
+    <svg-icon icon-class="404"></svg-icon>
     <aside>
       <a href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html" target="_blank">Add and use
       </a>

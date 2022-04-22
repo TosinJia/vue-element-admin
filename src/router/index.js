@@ -13,6 +13,7 @@ import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 
 /**
+ * 基于vue-router路由信息对象上做了一下小小的拓展，自定义了一些属性
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
@@ -37,6 +38,8 @@ import nestedRouter from './modules/nested'
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
+ * 所有权限通用路由表
+ * 如首页和登录页和一些不用权限的公用页面
  */
 export const constantRoutes = [
   {
@@ -127,6 +130,8 @@ export const constantRoutes = [
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
+ * 异步挂载的路由
+ * 动态需要根据权限加载的路由表
  */
 export const asyncRoutes = [
   {
@@ -138,7 +143,8 @@ export const asyncRoutes = [
     meta: {
       title: 'Permission',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      // 这里我们根据 vue-router官方推荐 的方法通过meta标签来标示改页面能访问的权限有哪些。如meta: { role: ['admin','super_editor'] }表示该页面只有admin和超级编辑才能有资格进入。
+      roles: ['admin', 'editor'] // you can set roles in root nav //页面需要的权限
     },
     children: [
       {
@@ -147,7 +153,7 @@ export const asyncRoutes = [
         name: 'PagePermission',
         meta: {
           title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
+          roles: ['admin'] // or you can only set roles in sub nav //页面需要的权限
         }
       },
       {
@@ -341,6 +347,19 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/qiniu',
+    component: Layout,
+    redirect: '/qiniu/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/qiniu/index'),
+        name: 'QN',
+        meta: { title: 'QINIU', icon: 'bug' }
+      }
+    ]
+  },
+  {
     path: '/pdf/download',
     component: () => import('@/views/pdf/download'),
     hidden: true
@@ -384,9 +403,14 @@ export const asyncRoutes = [
   },
 
   // 404 page must be placed at the end !!!
+  // 注意事项：这里有一个需要非常注意的地方就是 404 页面一定要最后加载，如果放在constantRouterMap一同声明了404，后面的所以页面都会被拦截到404，详细的问题见[addRoutes when you've got a wildcard route for 404s does not work](https://github.com/vuejs/vue-router/issues/1176)
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+// addRoutes && removeRoutes
+
+// 登录权限篇 具体实现 1. 创建vue实例的时候将vue-router挂载，但这个时候vue-router挂载一些登录或者不用权限的公用的页面。
+// 实例化vue的时候只挂载constantRouter
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
@@ -395,6 +419,7 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
+// 动态清除注册的路由
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()

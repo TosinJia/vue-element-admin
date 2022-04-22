@@ -1,3 +1,4 @@
+// 面包屑:本项目中也封装了一个面包屑导航，它也是通过watch $route动态生成的。
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
@@ -14,13 +15,15 @@ import pathToRegexp from 'path-to-regexp'
 
 export default {
   data() {
-    return {
-      levelList: null
+    return { // $vm0.$data
+      levelList: null // $vm0.$data.levelList
     }
   },
-  watch: {
-    $route(route) {
+  watch: { // $vm0.$options.watch
+    '$route': function(route, oldval) {
+    // $route(route) { // 通过watch $route动态生成的。
       // if you go to the redirect page, do not update the breadcrumbs
+      console.log('src\\components\\Breadcrumb\\index.vue watch $route', route)
       if (route.path.startsWith('/redirect/')) {
         return
       }
@@ -30,7 +33,7 @@ export default {
   created() {
     this.getBreadcrumb()
   },
-  methods: {
+  methods: { // $vm0.$options.methods
     getBreadcrumb() {
       // only show routes with meta.title
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)

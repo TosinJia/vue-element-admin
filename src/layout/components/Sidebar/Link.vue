@@ -22,6 +22,7 @@ export default {
       if (this.isExternal) {
         return 'a'
       }
+      // RouterLink
       return 'router-link'
     }
   },

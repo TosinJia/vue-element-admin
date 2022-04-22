@@ -121,6 +121,7 @@ export default {
           this.otherQuery = this.getOtherQuery(query)
         }
       },
+      // 添加immediate属性，这样初始化的时候也会触发
       immediate: true
     }
   },
@@ -156,12 +157,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          // [vuex] unknown action type: login $vm0.$store._actions
+          // this.$store.dispatch('login', this.loginForm)
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
+              // 登录成功之后重定向到指定也页或首页
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              // this.showDialog = true // 弹出选择第三方平台的dialog
               this.loading = false
             })
             .catch(() => {
+              // 登录失败提示错误
               this.loading = false
             })
         } else {

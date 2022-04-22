@@ -21,6 +21,7 @@ $subMenuHover:#001528;
 
 $sideBarWidth: 210px;
 
+// [Sass 和 Js 之间变量共享](https://juejin.cn/post/6844903840626507784) sass 将变量给 js
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {

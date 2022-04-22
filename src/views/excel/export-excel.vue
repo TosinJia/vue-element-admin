@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-
+    <!-- 导出Excle -->
     <div>
       <FilenameOption v-model="filename" />
       <AutoWidthOption v-model="autoWidth" />
@@ -82,7 +82,8 @@ export default {
         const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
         const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
         const list = this.list
-        const data = this.formatJson(filterVal, list)
+        const data = this.formatJson(filterVal, list) // 自行洗数据 按序排序的一个array数组
+        // 它暴露了两个接口export_table_to_excel和export_json_to_excel,我们常用export_json_to_excel因为更加的可控一点，我们可以自由的洗数据。
         excel.export_json_to_excel({
           header: tHeader,
           data,
@@ -95,7 +96,9 @@ export default {
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
+        console.log('jsonData', v, 'filterVal', j)
         if (j === 'timestamp') {
+          console.log('filterVal timestamp', j)
           return parseTime(v[j])
         } else {
           return v[j]

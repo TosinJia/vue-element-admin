@@ -2,8 +2,9 @@ import { asyncRoutes, constantRoutes } from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
- * @param roles
- * @param route
+ * 使用 meta.role 判断当前用户是否有权限
+ * @param roles src\store\modules\user.js state roles
+ * @param route src\router\index.js asyncRoutes meta.roles
  */
 function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
@@ -67,3 +68,5 @@ export default {
   mutations,
   actions
 }
+
+// 这里的代码说白了就是干了一件事，通过用户的权限和之前在router.js里面asyncRouterMap的每一个页面所需要的权限做匹配，最后返回一个该用户能够访问路由有哪些。

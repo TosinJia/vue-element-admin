@@ -63,7 +63,7 @@
 
 <script>
 import { fetchList } from '@/api/article'
-import Sortable from 'sortablejs'
+import Sortable from 'sortablejs' // 基于Sortable "sortablejs": "1.8.4"
 
 export default {
   name: 'DragTable',
@@ -108,15 +108,18 @@ export default {
       })
     },
     setSort() {
+      // 基于Sortable
       const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0]
       this.sortable = Sortable.create(el, {
         ghostClass: 'sortable-ghost', // Class name for the drop placeholder,
         setData: function(dataTransfer) {
+          console.log('Sortable.create setData', dataTransfer)
           // to avoid Firefox bug
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
           dataTransfer.setData('Text', '')
         },
-        onEnd: evt => {
+        onEnd: evt => { // 监听end事件 手动维护列表
+          console.log('Sortable.create onEnd', evt)
           const targetRow = this.list.splice(evt.oldIndex, 1)[0]
           this.list.splice(evt.newIndex, 0, targetRow)
 

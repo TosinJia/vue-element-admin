@@ -35,6 +35,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
+        // 登录成功后将token存储在cookie之中
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -124,6 +125,7 @@ const actions = {
 }
 
 export default {
+  // namespaced: false,
   namespaced: true,
   state,
   mutations,

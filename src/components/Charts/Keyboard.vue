@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts' // "echarts": "4.2.1",
 import resize from './mixins/resize'
 
-export default {
-  mixins: [resize],
-  props: {
+export default { // $vm0.$options
+  mixins: [resize], // $vm0.$options.mixins
+  props: { // $vm0.$options.props $vm0._props
     className: {
       type: String,
       default: 'chart'
@@ -28,23 +28,26 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null // $vm0.chart $vm0._data
     }
   },
-  mounted() {
+  mounted() { // $vm0.$options.mounted[2]
+    // 因为ECharts初始化必须绑定dom，所以我们只能在vue的mounted生命周期里初始化。
     this.initChart()
   },
-  beforeDestroy() {
+  beforeDestroy() { // ?
     if (!this.chart) {
       return
     }
     this.chart.dispose()
     this.chart = null
   },
-  methods: {
+  methods: { // $vm0.$options.methods
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id))
-
+      this.setOptions()
+    },
+    setOptions() {
       const xAxisData = []
       const data = []
       const data2 = []
